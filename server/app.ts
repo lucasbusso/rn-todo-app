@@ -1,4 +1,6 @@
 import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
 import {
   createTodo,
   deleteTodo,
@@ -11,8 +13,17 @@ import {
   toggleCompleted,
 } from "./database";
 
+dotenv.config();
 const app = express();
 app.use(express.json());
+
+const corsOptions = {
+  origin: process.env.FE_DOMAIN,
+  methods: ["POST", "GET"],
+  credentials: true,
+};
+app.use(cors(corsOptions));
+
 app.listen(8080, () => {
   console.log("Server running on port 8080");
 });
