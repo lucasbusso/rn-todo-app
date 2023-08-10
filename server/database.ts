@@ -1,6 +1,6 @@
 import mysql from "mysql2";
 import dotenv from "dotenv";
-import { Todo } from "./interfaces";
+import { Todo, User } from "./interfaces";
 dotenv.config();
 
 const pool = mysql
@@ -12,7 +12,7 @@ const pool = mysql
   })
   .promise();
 
-export async function getTodosById(id: number): Promise<void> {
+export async function getTodosById(id: string): Promise<void> {
   const [rows] = await pool.query(
     `
   SELECT todos.*, shared_todos.shared_with_id
@@ -25,24 +25,24 @@ export async function getTodosById(id: number): Promise<void> {
   return rows;
 }
 
-export async function getTodo(id: number): Promise<Todo> {
+export async function getTodo(id: string): Promise<Todo> {
   const [rows] = await pool.query(`SELECT * FROM todos WHERE id = ?`, [id]);
   return rows[0];
 }
 
-export async function getSharedTodoById(id: number): Promise<void> {
+export async function getSharedTodoById(id: string): Promise<Todo> {
   const [rows] = await pool.query(`SELECT * FROM shared_todos WHERE id = ?`, [
     id,
   ]);
   return rows[0];
 }
 
-export async function getUSerById(id: number): Promise<void> {
+export async function getUSerById(id: string): Promise<User> {
   const [rows] = await pool.query(`SELECT * FROM users WHERE id =?`, [id]);
   return rows[0];
 }
 
-export async function getUserByEmail(email: string): Promise<void> {
+export async function getUserByEmail(email: string): Promise<User> {
   const [rows] = await pool.query(`SELECT * FROM users WHERE email =?`, [
     email,
   ]);
@@ -50,7 +50,7 @@ export async function getUserByEmail(email: string): Promise<void> {
 }
 
 export async function createTodo(
-  user_id: number,
+  user_id: string,
   title: string
 ): Promise<Todo> {
   const [result] = await pool.query(
@@ -61,7 +61,7 @@ export async function createTodo(
   return getTodo(todoID);
 }
 
-export async function deleteTodo(id: number): Promise<void> {
+export async function deleteTodo(id: string): Promise<void> {
   const [result] = await pool.query(
     `
     DELETE FROM todos WHERE id = ?`,
@@ -70,7 +70,7 @@ export async function deleteTodo(id: number): Promise<void> {
   return result;
 }
 
-export async function toggleCompleted(id: number, value: boolean) {
+export async function toggleCompleted(id: string, value: boolean) {
   const newValue = value === true ? "TRUE" : "FALSE";
   const [result] = await pool.query(
     `UPDATE todos SET completed = ${newValue} WHERE id = ?`,
@@ -80,10 +80,10 @@ export async function toggleCompleted(id: number, value: boolean) {
 }
 
 export async function shareTodo(
-  todo_id: number,
-  user_id: number,
-  shared_with_id: number
-): Promise<void> {
+  todo_id: string,
+  user_id: string,
+  shared_with_id: string
+): Promise<Todo> {
   const [result] = await pool.query(
     `
     INSERT INTO shared_todos (todo_id, user_id, shared_with_id) VALUES (?,?,?)`,
