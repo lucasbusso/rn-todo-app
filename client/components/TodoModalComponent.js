@@ -11,6 +11,7 @@ export default function TodoModalComponent({ id, title }) {
       "http://192.168.0.31:8080/todos/shared_todos",
       {
         headers: {
+          "x-api-key": "abcdef123456",
           "Content-Type": "application/json",
         },
         method: "POST",

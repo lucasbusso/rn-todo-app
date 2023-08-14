@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import { Request, Response, NextFunction } from "express";
 
 import {
   getTodo,
@@ -26,6 +27,37 @@ const corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions));
+
+// const developers: Developer[] = [
+//   { id: 1, name: "John Doe", apiKey: "abcdef123456" },
+//   { id: 2, name: "Jane Doe", apiKey: "ghijkl789012" },
+// ];
+
+// interface Developer {
+//   apiKey: string;
+//   name: string;
+//   id: number;
+// }
+
+// declare global {
+//   namespace Express {
+//     interface Request {
+//       developer?: Developer;
+//     }
+//   }
+// }
+
+// const ckeckApiKey = (req: Request, res: Response, next: NextFunction) => {
+//   const apiKey = req.headers["x-api-key"];
+//   const developer = developers.find((d) => d.apiKey === apiKey); //check if we have a dev with that key
+//   if (!developer) {
+//     return res.status(401).json({ message: "Unauthorized, invalid Api Key" });
+//   }
+//   req.developer = developer;
+//   next();
+// };
+
+// app.use(ckeckApiKey);
 
 app.listen(8080, () => {
   console.log("Server running on port 8080");

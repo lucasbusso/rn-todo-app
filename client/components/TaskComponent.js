@@ -18,13 +18,14 @@ export default function TaskComponent({
   title,
   shared_with_id,
   completed,
+  clearTodo,
   toggleTodo,
 }) {
   const [isDeleteActive, setIsDeleteActive] = useState(false);
   const bottomSheetModalRef = useRef(null);
   const sharedBottomSheetRef = useRef(null);
   const snapPoints = ["25%", "48%", "75%"];
-  const snapPointsShared = ["50%"];
+  const snapPointsShared = ["70%"];
 
   function handlePresentModal() {
     bottomSheetModalRef.current?.present();

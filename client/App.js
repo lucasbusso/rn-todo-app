@@ -12,7 +12,7 @@ export default function App() {
   }, []);
 
   async function fetchData() {
-    const response = await fetch(`http://192.168.0.31:8080/todos/1`);
+    const response = await fetch(`http://192.168.0.31:8080/todos/2`);
     const data = await response.json();
     setTodos(data);
   }
