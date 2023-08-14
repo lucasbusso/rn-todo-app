@@ -7,7 +7,10 @@ import {
   Pressable,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+
 import CheckComponent from "./CheckComponent";
+import SharedTodoModalComponent from "./SharedTodoModalComponent";
 
 export default function TaskComponent({
   id,
@@ -20,7 +23,7 @@ export default function TaskComponent({
   const bottomSheetModalRef = useRef(null);
   const sharedBottomSheetRef = useRef(null);
   const snapPoints = ["25%", "48%", "75%"];
-  const snapPointsShared = ["40%"];
+  const snapPointsShared = ["50%"];
 
   function handlePresentModal() {
     bottomSheetModalRef.current?.present();
@@ -54,7 +57,7 @@ export default function TaskComponent({
       </View>
       {shared_with_id !== null ? (
         <Feather
-          onPress={handlePresentModal}
+          onPress={handlePresentShared}
           name="users"
           size={20}
           color="#383839"
@@ -72,6 +75,18 @@ export default function TaskComponent({
           <Text style={{ color: "white", fontWeight: "bold" }}>x</Text>
         </Pressable>
       )}
+      <BottomSheetModal
+        ref={sharedBottomSheetRef}
+        snapPoints={snapPoints}
+        backgroundStyle={{ borderRadius: 50, borderWidth: 0.5 }}
+      >
+        <SharedTodoModalComponent
+          id={id}
+          title={title}
+          shared_with_id={shared_with_id}
+          completed={completed}
+        ></SharedTodoModalComponent>
+      </BottomSheetModal>
     </TouchableOpacity>
   );
 }
