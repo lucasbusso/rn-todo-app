@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+
 import TaskComponent from "./components/TaskComponent";
 
 export default function App() {
@@ -30,23 +32,25 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <SafeAreaView>
-        <FlatList
-          data={todos}
-          keyExtractor={(todos) => todos.id}
-          ListHeaderComponent={() => <Text style={styles.title}>Today</Text>}
-          renderItem={({ item }) => (
-            <TaskComponent
-              {...item}
-              toggleTodo={toggleTodo}
-              clearTodo={clearTodo}
-            />
-          )}
-          contentContainerStyle={styles.contentContainerStyle}
-        />
-      </SafeAreaView>
-    </View>
+    <BottomSheetModalProvider>
+      <View style={styles.container}>
+        <SafeAreaView>
+          <FlatList
+            data={todos}
+            keyExtractor={(todos) => todos.id}
+            ListHeaderComponent={() => <Text style={styles.title}>Today</Text>}
+            renderItem={({ item }) => (
+              <TaskComponent
+                {...item}
+                toggleTodo={toggleTodo}
+                clearTodo={clearTodo}
+              />
+            )}
+            contentContainerStyle={styles.contentContainerStyle}
+          />
+        </SafeAreaView>
+      </View>
+    </BottomSheetModalProvider>
   );
 }
 
