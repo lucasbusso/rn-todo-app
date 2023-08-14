@@ -11,6 +11,7 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 import CheckComponent from "./CheckComponent";
 import SharedTodoModalComponent from "./SharedTodoModalComponent";
+import TodoModalComponent from "./TodoModalComponent";
 
 export default function TaskComponent({
   id,
@@ -75,6 +76,7 @@ export default function TaskComponent({
           <Text style={{ color: "white", fontWeight: "bold" }}>x</Text>
         </Pressable>
       )}
+
       <BottomSheetModal
         ref={sharedBottomSheetRef}
         snapPoints={snapPoints}
@@ -86,6 +88,15 @@ export default function TaskComponent({
           shared_with_id={shared_with_id}
           completed={completed}
         ></SharedTodoModalComponent>
+      </BottomSheetModal>
+
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={2}
+        snapPoints={snapPoints}
+        backgroundStyle={{ borderRadius: 50, borderWidth: 0.5 }}
+      >
+        <TodoModalComponent id={id} title={title} />
       </BottomSheetModal>
     </TouchableOpacity>
   );
