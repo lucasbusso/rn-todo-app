@@ -55,7 +55,7 @@ export async function createTodo(
 ): Promise<Todo> {
   const [result] = await pool.query(
     `INSERT INTO todos (id, title) VALUES (?,?)`,
-    [user_id, title]
+    [(user_id = "1"), title]
   );
   const todoID = result.insertId;
   return getTodo(todoID);

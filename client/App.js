@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 import TaskComponent from "./components/TaskComponent";
+import InputTaskComponent from "./components/InputTaskComponent";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
@@ -33,23 +34,22 @@ export default function App() {
 
   return (
     <BottomSheetModalProvider>
-      <View style={styles.container}>
-        <SafeAreaView>
-          <FlatList
-            data={todos}
-            keyExtractor={(todos) => todos.id}
-            ListHeaderComponent={() => <Text style={styles.title}>Today</Text>}
-            renderItem={({ item }) => (
-              <TaskComponent
-                {...item}
-                toggleTodo={toggleTodo}
-                clearTodo={clearTodo}
-              />
-            )}
-            contentContainerStyle={styles.contentContainerStyle}
-          />
-        </SafeAreaView>
-      </View>
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={todos}
+          keyExtractor={(todos) => todos.id}
+          ListHeaderComponent={() => <Text style={styles.title}>Today</Text>}
+          renderItem={({ item }) => (
+            <TaskComponent
+              {...item}
+              toggleTodo={toggleTodo}
+              clearTodo={clearTodo}
+            />
+          )}
+          contentContainerStyle={styles.contentContainerStyle}
+        />
+        <InputTaskComponent todos={todos} setTodos={setTodos} />
+      </SafeAreaView>
     </BottomSheetModalProvider>
   );
 }
