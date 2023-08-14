@@ -3,6 +3,9 @@ import { Pressable, StyleSheet } from "react-native";
 export default function CheckComponent({ id, completed, toggleTodo }) {
   async function toggle() {
     const response = await fetch(`http://192.168.0.31:8080/todos/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
       method: "PUT",
       body: JSON.stringify({
         value: completed ? false : true,
